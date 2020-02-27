@@ -1,6 +1,7 @@
 // Character2DArray
 #include<iostream> 
 using namespace std;
+#define ROW 100
 
 void Print(char a[][100],int r){
 	for(int row = 0 ; row<r ; row++){
@@ -26,7 +27,7 @@ int main(){
 	// };
 
 	// User Input
-	char a[100][100];
+	char a[ROW][100];
 	int row;
 
 	cin>>row;
