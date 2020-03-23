@@ -3,11 +3,10 @@
 using namespace std;
 
 class Vector{
-public:
 	int* arr;
 	int cs;
-	int ms;
-
+	int ms;	
+public:
 	Vector(int s=2){
 		arr = new int[s];
 		cs = 0;
