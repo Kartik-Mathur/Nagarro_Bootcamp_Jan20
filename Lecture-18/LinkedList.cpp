@@ -99,6 +99,26 @@ void DeleteAtEnd(node* &head,node* &tail){
 	}	
 }
 
+void DeleteAtMid(node* &head,node* &tail,int pos){
+	if(pos == 0){
+		DeleteAtFront(head,tail);
+	}
+	else if(pos>=lengthLL(head)-1){
+		DeleteAtEnd(head,tail);
+	}
+	else{
+		node* temp = head;
+		int count = 1;
+		while(count<=pos-1){
+			temp = temp->next;
+			count++;
+		}
+		node* n = temp->next;
+		temp->next = n->next;
+		delete n;
+	}
+}
+
 void Print(node* head){
 
 	while(head){
@@ -107,6 +127,32 @@ void Print(node* head){
 	}
 	cout<<"NULL"<<endl;
 }
+
+node* SearchLL(node* head,int key){
+
+	while(head){
+		if(head->data == key){
+			return head;
+		}
+		head =head->next;
+	}
+	return NULL;
+}
+
+node* SearchRecursivelyLL(node* head,int key){
+	// Base case
+	if(head == NULL){
+		return NULL;
+	}
+
+	// Recursive case
+	if(head->data == key){
+		return head;
+	}
+	node* ans = SearchRecursivelyLL(head->next,key);
+	return ans;
+}
+
 
 
 
@@ -129,11 +175,22 @@ int main(){
 	Print(head);
 	InsertAtMid(head,tail,100,100);
 	Print(head);
-	cout<<"Deleting Nodes : "<<endl;
-	DeleteAtFront(head,tail);
+	// cout<<"Deleting Nodes : "<<endl;
+	// DeleteAtFront(head,tail);
+	// Print(head);
+	// DeleteAtEnd(head,tail);
+	// Print(head);
+	cout<<"Deleting Nodes at Mid : "<<endl;
+	DeleteAtMid(head,tail,4);
 	Print(head);
-	DeleteAtEnd(head,tail);
-	Print(head);
+
+	node* ans = SearchRecursivelyLL(head,6);
+	if(ans == NULL){
+		cout<<"Node not found"<<endl;
+	}
+	else{
+		cout<<"Node Found "<<ans->data<<endl;
+	}
 
 
 	return 0; 
