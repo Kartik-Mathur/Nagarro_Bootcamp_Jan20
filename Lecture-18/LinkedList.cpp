@@ -65,6 +65,40 @@ void InsertAtMid(node* &head,node* &tail,int pos,int data){
 	}
 }
 
+void DeleteAtFront(node* &head,node* &tail){
+	if(head == NULL){
+		return;
+	}
+	else if(head->next == NULL){
+		delete head;
+		head = tail = NULL;
+	}
+	else{
+		node* temp = head;
+		head = head->next;
+		delete temp;
+	}
+}
+
+void DeleteAtEnd(node* &head,node* &tail){
+	if(head == NULL){
+		return;
+	}
+	else if(head->next == NULL){
+		delete head;
+		head = tail = NULL;
+	}
+	else{
+		node* temp = head;
+		while(temp->next!=tail){
+			temp = temp->next;
+		}
+		delete tail;
+		tail = temp;
+		temp->next = NULL;
+	}	
+}
+
 void Print(node* head){
 
 	while(head){
@@ -95,7 +129,11 @@ int main(){
 	Print(head);
 	InsertAtMid(head,tail,100,100);
 	Print(head);
-
+	cout<<"Deleting Nodes : "<<endl;
+	DeleteAtFront(head,tail);
+	Print(head);
+	DeleteAtEnd(head,tail);
+	Print(head);
 
 
 	return 0; 
