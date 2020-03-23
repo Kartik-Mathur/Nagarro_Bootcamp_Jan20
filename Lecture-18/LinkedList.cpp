@@ -153,7 +153,18 @@ node* SearchRecursivelyLL(node* head,int key){
 	return ans;
 }
 
-
+void ReverseLL(node* &head,node* &tail){
+	node* p = NULL;
+	node* c = head;
+	while(c){
+		node* n = c->next;
+		c->next = p;
+		p = c;
+		c = n;
+	}
+	tail = head;
+	head = p;
+}
 
 
 int main(){
@@ -175,22 +186,26 @@ int main(){
 	Print(head);
 	InsertAtMid(head,tail,100,100);
 	Print(head);
+	ReverseLL(head,tail);
+	Print(head);
+	ReverseLL(head,tail);
+	Print(head);	
 	// cout<<"Deleting Nodes : "<<endl;
 	// DeleteAtFront(head,tail);
 	// Print(head);
 	// DeleteAtEnd(head,tail);
 	// Print(head);
-	cout<<"Deleting Nodes at Mid : "<<endl;
-	DeleteAtMid(head,tail,4);
-	Print(head);
+	// cout<<"Deleting Nodes at Mid : "<<endl;
+	// DeleteAtMid(head,tail,4);
+	// Print(head);
 
-	node* ans = SearchRecursivelyLL(head,6);
-	if(ans == NULL){
-		cout<<"Node not found"<<endl;
-	}
-	else{
-		cout<<"Node Found "<<ans->data<<endl;
-	}
+	// node* ans = SearchRecursivelyLL(head,6c);
+	// if(ans == NULL){
+	// 	cout<<"Node not found"<<endl;
+	// }
+	// else{
+	// 	cout<<"Node Found "<<ans->data<<endl;
+	// }
 
 
 	return 0; 
