@@ -113,36 +113,86 @@ node* mergeSortLL(node* head){
 	return newHead;	
 }
 
+void BubbleSortLL(node* &head){
+	int n = lengthLL(head);
+
+	for(int i=1;i<=n-1;i++){
+
+		node* c = head;
+		node* p = NULL;
+		node* n;
+		while(c && c->next){
+			n = c->next;
+
+			if(c->data>n->data){
+				// swapping will take place
+				if(p == NULL){
+					// head will change
+					c->next = n->next;
+					n->next = c;
+					head = p =n;
+				}
+				else{
+					// head wont change
+					c->next = n->next;
+					n->next = c;
+					p->next = n;
+					p = n;
+				}
+			}
+			else{
+				// swapping wont happen
+				p = c;
+				c = n;
+			}
+
+		}
+
+	}
+}
+
+bool isCyclic(node *head){
+
+	node* slow = head;
+	node* fast = head;
+
+	while(fast && fast->next){
+		fast = fast->next->next;
+		slow = slow->next;
+		if(fast == slow){
+			return true;
+		}
+	}
+	return false;
+}
+
+void CreateCycle(node* head){
+	node* temp = head;
+	while(temp->next != NULL){
+		temp = temp->next;
+	}
+	temp->next = head->next->next;
+}
+
 
 
 int main(){
 
 	node* head = NULL;
-	node* head1 = NULL;
-	InsertAtFront(head,10);
-	InsertAtFront(head,2);
-	InsertAtFront(head,0);
-	InsertAtFront(head,11);
-	InsertAtFront(head,3);
-	InsertAtFront(head,1);
-	InsertAtFront(head,4);
-	InsertAtFront(head,5);
-	InsertAtFront(head,7);
-	InsertAtFront(head,4);
-	Print(head);
-	// for(int i =9;i>=1;i-=2){
-	// 	InsertAtFront(head,i);
-	// }
-
-	// for(int i = 10;i>=1;i-=2){
-	// 	InsertAtFront(head1,i);
-	// }
-	// node* ans = mid(head);
-	// cout<<"Middle : "<<ans->data<<endl;
-
 	
-	head = mergeSortLL(head);
+	for(int i=8;i>=1;i--){
+		InsertAtFront(head,i);
+	}
+
 	Print(head);
+	CreateCycle(head);
+	// Print(head);
+	if(isCyclic(head)){
+		cout<<"Cycle Detected"<<endl;
+	}
+	else{
+		cout<<"No Cycle"<<endl;
+	}
 
 	return 0; 	
 }
