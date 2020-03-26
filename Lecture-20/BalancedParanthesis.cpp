@@ -4,9 +4,7 @@
 using namespace std;
 
 bool isBalanced(char* a){
-
 	stack<char> s;
-
 	for(int i=0;a[i]!='\0';i++){
 		char ch = a[i];
 		switch(ch){
@@ -41,13 +39,12 @@ bool isBalanced(char* a){
 					break;
 		}
 	}
-
 	return s.empty() == true?true:false;
 }
 
 int main(){
 
-	char a[100]= "{a+(b+c)*d+(e+f)*g}]";
+	char a[100]= "{a+(b+c)*d+(e+f)*g}";
 
 	if(isBalanced(a)){
 		cout<<"BalancedParanthesis"<<endl;
