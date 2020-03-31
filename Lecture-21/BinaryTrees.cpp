@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 class node{
@@ -115,6 +116,46 @@ Pair FastDiameter(node* root){
 	return p;
 }
 
+node* SearchBT(node* root,int key){
+	if(root == NULL){
+		return NULL;
+	}
+
+	if(root->data == key){
+		return root;
+	}
+	node* ans = SearchBT(root->left,key);
+	if(ans!=NULL){
+		return ans;
+	}
+	return SearchBT(root->right,key);
+}
+
+void LevelOrder(node* root){
+	queue<node*> q;
+	q.push(root);
+	q.push(NULL);
+	while(!q.empty()){
+		node* ans = q.front();
+		q.pop();
+		if(ans == NULL){
+			cout<<endl;
+			if(!q.empty()){
+				q.push(NULL);
+			}
+		}
+		else{
+			cout<<ans->data<<" ";
+			if(ans->left){
+				q.push(ans->left);
+			}
+			if(ans->right){
+				q.push(ans->right);
+			}
+		}
+	}
+}
+
 int main(){
 	node* root = NULL;
 
@@ -128,11 +169,20 @@ int main(){
 	cout<<"Number of Nodes : "<<CountNodes(root)<<endl;
 	cout<<"Height : "<<height(root)<<endl;
 	cout<<"Diameter : "<<diameter(root)<<endl;
-	Pair ans = FastDiameter(root);
+	LevelOrder(root);
+	// Pair ans = FastDiameter(root);
 
-	cout<<"Fast Height : "<<ans.height<<endl;
-	cout<<"Fast Diameter : "<<ans.diameter<<endl;
+	// cout<<"Fast Height : "<<ans.height<<endl;
+	// cout<<"Fast Diameter : "<<ans.diameter<<endl;
+	// int key;
+	// cin>>key;
 
-
+	// node*ans = SearchBT(root,key);
+	// if(ans!=NULL){
+	// 	cout<<"Found : "<<ans->data<<endl;
+	// }
+	// else{
+	// 	cout<<"Not Found"<<endl;
+	// }
 	return 0;
 }
