@@ -140,30 +140,101 @@ void LevelOrder(node* root){
 	}
 }
 
+node* ArrayToBst(int *a,int s,int e){
+	// base case
+	if(s>e){
+		return NULL;
+	}
+
+	int mid = (s+e)/2;
+	node* root = new node(a[mid]);
+	root->left = ArrayToBst(a,s,mid-1);
+	root->right = ArrayToBst(a,mid+1,e);
+	return root;
+}
+
+class LinkedList{
+public:
+	node* head;
+	node* tail;
+};
+
+LinkedList BSTtoLL(node* root){
+	LinkedList l;
+	if(root == NULL){
+		l.head = l.tail = NULL;
+		return l;
+	}
+
+	if(root->left == NULL && root->right == NULL){
+		l.head = l.tail = root;
+		return l;
+	}
+	else if(root->left != NULL && root->right == NULL){
+		LinkedList left = BSTtoLL(root->left);
+		left.tail->right = root;
+		l.head = left.head;
+		l.tail =root;
+		return l;
+	}
+	else if(root->left == NULL && root->right != NULL){
+		LinkedList right = BSTtoLL(root->right);
+		root->right = right.head;
+		l.head =root;
+		l.tail = right.tail;
+		return l;
+	}
+	else{
+		LinkedList left = BSTtoLL(root->left);
+		LinkedList right = BSTtoLL(root->right);
+		left.tail->right = root;
+		root->right = right.head;
+		l.head = left.head;
+		l.tail = right.tail;
+		return l;
+	}
+}
+
+void Print(node* head){
+	while(head){
+		cout<<head->data<<"-->";
+		head = head->right;
+	}
+	cout<<"NULL"<<endl;
+}
+
 int main(){
 	node* root = NULL;
+	// int a[] = {1,2,3,4,5,6,7,8};
+	// int n = sizeof(a)/sizeof(int);
+
+	// root = ArrayToBst(a,0,n-1);
 
 	root = CreateBST();
-	Pair p = isBalanced(root);
-	if(p.balanced){
-		cout<<"Balanced "<<endl;
-	}
-	else{
-		cout<<"Not Balanced"<<endl;
-	}
-	cout<<"Height : "<<p.height<<endl;
-	if(isBST(root)){
-		cout<<"BST"<<endl;
-	}
-	else{
-		cout<<"Not a BST"<<endl;
-	}
+	LevelOrder(root);
+	
+	// LinkedList l = BSTtoLL(root);
+	// Print(l.head);
+	// Pair p = isBalanced(root);
+	// if(p.balanced){
+	// 	cout<<"Balanced "<<endl;
+	// }
+	// else{
+	// 	cout<<"Not Balanced"<<endl;
+	// }
+	// cout<<"Height : "<<p.height<<endl;
+	// if(isBST(root)){
+	// 	cout<<"BST"<<endl;
+	// }
+	// else{
+	// 	cout<<"Not a BST"<<endl;
+	// }
 	// PreOrder(root);
 	// cout<<endl;
 	// InOrder(root);
 	// cout<<endl;
 	// PostOrder(root);
 	// cout<<endl;
-	// LevelOrder(root);
+	LevelOrder(root);
 	return 0;
 }
