@@ -33,7 +33,6 @@ node* InsertInBst(node* root,int data){
 
 node* CreateBST(){
 	node* root = NULL;
-
 	int data;
 	cin>>data;
 	while(data!=-1){
@@ -42,6 +41,46 @@ node* CreateBST(){
 		cin>>data;
 	}
 	return root;
+}
+
+class Pair{
+public:
+	int height;
+	bool balanced;
+};
+
+Pair isBalanced(node* root){
+	Pair p;
+	if(root == NULL){
+		p.height = 0;
+		p.balanced = true;
+		return p;
+	}
+
+	Pair left = isBalanced(root->left);
+	Pair right = isBalanced(root->right);
+
+	p.height = max(left.height,right.height)+1;
+	if(abs(left.height-right.height)<=1 && left.balanced && right.balanced){
+		p.balanced = true;
+	}
+	else{
+		p.balanced = false;
+	}
+	return p;
+}
+
+bool isBST(node* root,int min=INT_MIN,int max=INT_MAX){
+	if(root == NULL){
+		return true;
+	}
+
+	if(root->data>=min && root->data<=max && isBST(root->left,min,root->data) && isBST(root->right,root->data,max)){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 
 void PreOrder(node* root){
@@ -105,12 +144,26 @@ int main(){
 	node* root = NULL;
 
 	root = CreateBST();
-	PreOrder(root);
-	cout<<endl;
-	InOrder(root);
-	cout<<endl;
-	PostOrder(root);
-	cout<<endl;
-	LevelOrder(root);
+	Pair p = isBalanced(root);
+	if(p.balanced){
+		cout<<"Balanced "<<endl;
+	}
+	else{
+		cout<<"Not Balanced"<<endl;
+	}
+	cout<<"Height : "<<p.height<<endl;
+	if(isBST(root)){
+		cout<<"BST"<<endl;
+	}
+	else{
+		cout<<"Not a BST"<<endl;
+	}
+	// PreOrder(root);
+	// cout<<endl;
+	// InOrder(root);
+	// cout<<endl;
+	// PostOrder(root);
+	// cout<<endl;
+	// LevelOrder(root);
 	return 0;
 }
