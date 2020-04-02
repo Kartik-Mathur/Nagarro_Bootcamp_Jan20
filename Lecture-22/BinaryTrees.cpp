@@ -192,15 +192,39 @@ void mirrorTree(node* root){
 	mirrorTree(root->left);
 	mirrorTree(root->right);
 }
+int pre[] = {8,3,1,6,4,7,10,14,13};
+int in[]= {1,3,4,6,7,8,10,13,14};
+int k = 0;
+
+node* BuildTree(int s,int e){
+	if(s>e){
+		return NULL;
+	}
+
+	int data = pre[k++];
+	node* root = new node(data);
+
+	int j=-1;
+	for(int i=s;i<=e;i++){
+		if(in[i] == data){
+			j = i;
+			break;
+		}
+	}
+
+	root->left = BuildTree(s,j-1);
+	root->right = BuildTree(j+1,e);
+	return root;
+}
 
 int main(){
 	node* root = NULL;
 
-	root = CreateBT();
-	// PreOrder(root);
-	// cout<<endl;
-	// InOrder(root);
-	// cout<<endl;
+	root = BuildTree(0,8);
+	PreOrder(root);
+	cout<<endl;
+	InOrder(root);
+	cout<<endl;
 	// PostOrder(root);
 	// cout<<endl;
 	// cout<<"Number of Nodes : "<<CountNodes(root)<<endl;
