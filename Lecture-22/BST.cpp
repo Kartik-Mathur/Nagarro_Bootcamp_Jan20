@@ -211,10 +211,10 @@ int main(){
 	// root = ArrayToBst(a,0,n-1);
 
 	root = CreateBST();
-	LevelOrder(root);
+	// LevelOrder(root);
 	
-	// LinkedList l = BSTtoLL(root);
-	// Print(l.head);
+	LinkedList l = BSTtoLL(root);
+	Print(l.head);
 	// Pair p = isBalanced(root);
 	// if(p.balanced){
 	// 	cout<<"Balanced "<<endl;
@@ -235,6 +235,6 @@ int main(){
 	// cout<<endl;
 	// PostOrder(root);
 	// cout<<endl;
-	LevelOrder(root);
+	// LevelOrder(root);
 	return 0;
 }
